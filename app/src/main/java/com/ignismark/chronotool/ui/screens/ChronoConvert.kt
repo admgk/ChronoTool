@@ -65,34 +65,67 @@ fun ConvertScreen(
                 }
             )
             HorizontalDivider()
-            Row(modifier = Modifier.fillMaxWidth()) {
-                OutlinedTextField(
-                    value = viewModel.getHours(),
-                    onValueChange = { },
-                    label = {
-                        Text(text = "H")
-                    },
-                    readOnly = true,
-                    modifier = Modifier.weight(1f)
-                )
-                OutlinedTextField(
-                    value = viewModel.getMinutes(),
-                    onValueChange = { },
-                    label = {
-                        Text(text = "M")
-                    },
-                    readOnly = true,
-                    modifier = Modifier.weight(1f)
-                )
-                OutlinedTextField(
-                    value = viewModel.getSeconds(),
-                    onValueChange = { },
-                    label = {
-                        Text(text = "S")
-                    },
-                    readOnly = true,
-                    modifier = Modifier.weight(1f)
-                )
+            Column {
+                Row(modifier = Modifier.fillMaxWidth()) {
+                    OutlinedTextField(
+                        value = viewModel.getHours(),
+                        onValueChange = { },
+                        label = {
+                            Text(text = "H")
+                        },
+                        readOnly = true,
+                        modifier = Modifier.weight(1f)
+                    )
+                    OutlinedTextField(
+                        value = viewModel.getMinutes(),
+                        onValueChange = { },
+                        label = {
+                            Text(text = "M")
+                        },
+                        readOnly = true,
+                        modifier = Modifier.weight(1f)
+                    )
+                    OutlinedTextField(
+                        value = viewModel.getSeconds(),
+                        onValueChange = { },
+                        label = {
+                            Text(text = "S")
+                        },
+                        readOnly = true,
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+                Row(modifier = Modifier.fillMaxWidth()) {
+                    OutlinedTextField(
+                        value = uiState.outputDuration.inWholeMinutes.toString(),
+                        onValueChange = { },
+                        label = {
+                            Text(text = "M")
+                        },
+                        readOnly = true,
+                        modifier = Modifier.weight(1f)
+                    )
+                    OutlinedTextField(
+                        value = viewModel.getSeconds(),
+                        onValueChange = { },
+                        label = {
+                            Text(text = "S")
+                        },
+                        readOnly = true,
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+                Row {
+                    OutlinedTextField(
+                        value = uiState.outputDuration.inWholeSeconds.toString(),
+                        onValueChange = { },
+                        label = {
+                            Text(text = "S")
+                        },
+                        readOnly = true,
+                        modifier = Modifier.weight(1f)
+                    )
+                }
             }
         }
     }
