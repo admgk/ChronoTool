@@ -1,6 +1,9 @@
 package com.ignismark.chronotool.ui.screens
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -47,6 +50,14 @@ class ChronoConvertViewModel : ViewModel() {
     fun getSeconds(): String {
         return _uiState.value.outputDuration.toComponents { hours, minutes, seconds, nanoseconds
             -> seconds }.toString()
+    }
+
+    companion object {
+        val Factory: ViewModelProvider.Factory = viewModelFactory {
+            initializer {
+                ChronoConvertViewModel()
+            }
+        }
     }
 }
 

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -13,10 +14,13 @@ import com.ignismark.chronotool.ui.components.ChronoToolNavigationBar
 import com.ignismark.chronotool.ui.components.ChronoToolTopBar
 import com.ignismark.chronotool.ui.components.ChronoToolRoutes
 import com.ignismark.chronotool.ui.screens.ChronoConvert
+import com.ignismark.chronotool.ui.screens.ChronoConvertViewModel
 
 @Composable
 fun ChronoToolApp() {
 
+    val convertViewModel: ChronoConvertViewModel =
+        viewModel(factory = ChronoConvertViewModel.Factory)
     val navController: NavHostController = rememberNavController()
 
     Scaffold(
@@ -31,17 +35,20 @@ fun ChronoToolApp() {
         ) {
             composable(route = ChronoToolRoutes.Convert.title) {
                 ChronoConvert(
-                    modifier = Modifier.padding(innerPadding)
+                    modifier = Modifier.padding(innerPadding),
+                    viewModel = convertViewModel
                 )
             }
             composable(route = ChronoToolRoutes.Add.title) {
                 ChronoConvert(
-                    modifier = Modifier.padding(innerPadding)
+                    modifier = Modifier.padding(innerPadding),
+                    viewModel = convertViewModel
                 )
             }
             composable(route = ChronoToolRoutes.Subtract.title) {
                 ChronoConvert(
-                    modifier = Modifier.padding(innerPadding)
+                    modifier = Modifier.padding(innerPadding),
+                    viewModel = convertViewModel
                 )
             }
         }

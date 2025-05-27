@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 @Composable
 fun ChronoConvert(
     modifier: Modifier = Modifier,
-    viewModel: ChronoConvertViewModel = ChronoConvertViewModel()
+    viewModel: ChronoConvertViewModel
 ) {
     ConvertScreen(
         modifier = modifier,
