@@ -13,6 +13,8 @@ import androidx.navigation.compose.rememberNavController
 import com.ignismark.chronotool.ui.components.ChronoToolNavigationBar
 import com.ignismark.chronotool.ui.components.ChronoToolTopBar
 import com.ignismark.chronotool.ui.components.ChronoToolRoutes
+import com.ignismark.chronotool.ui.screens.AddScreen
+import com.ignismark.chronotool.ui.screens.AddScreenViewModel
 import com.ignismark.chronotool.ui.screens.ChronoConvert
 import com.ignismark.chronotool.ui.screens.ChronoConvertViewModel
 
@@ -21,6 +23,8 @@ fun ChronoToolApp() {
 
     val convertViewModel: ChronoConvertViewModel =
         viewModel(factory = ChronoConvertViewModel.Factory)
+    val addViewModel: AddScreenViewModel =
+        viewModel(factory = AddScreenViewModel.Factory)
     val navController: NavHostController = rememberNavController()
 
     Scaffold(
@@ -40,9 +44,9 @@ fun ChronoToolApp() {
                 )
             }
             composable(route = ChronoToolRoutes.Add.title) {
-                ChronoConvert(
+                AddScreen(
                     modifier = Modifier.padding(innerPadding),
-                    viewModel = convertViewModel
+                    viewModel = addViewModel
                 )
             }
             composable(route = ChronoToolRoutes.Subtract.title) {
