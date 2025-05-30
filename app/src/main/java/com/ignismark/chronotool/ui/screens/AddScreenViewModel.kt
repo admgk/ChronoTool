@@ -29,6 +29,14 @@ class AddScreenViewModel : ViewModel() {
         _uiState.value = _uiState.value.copy(inputSeconds = input)
     }
 
+    fun saveAndClearPartialDuration() {
+        val duration = _uiState.value.partialDuration
+        if (duration != Duration.ZERO) {
+            _uiState.value = _uiState.value.copy(valuesList = _uiState.value.valuesList + duration)
+            _uiState.value = _uiState.value.copy(partialDuration = Duration.ZERO)
+        }
+    }
+
     fun calculatePartialDuration() {
         val hours = _uiState.value.inputHours.toLongOrNull() ?: 0
         val minutes = _uiState.value.inputMinutes.toLongOrNull() ?: 0
@@ -70,6 +78,7 @@ data class AddScreenUiState(
     val inputHours: String = "",
     val inputMinutes: String = "",
     val inputSeconds: String = "",
+    val valuesList: List<Duration> = emptyList(),
     val partialDuration: Duration = Duration.ZERO,
     val totalDuration: Duration = Duration.ZERO
 )
