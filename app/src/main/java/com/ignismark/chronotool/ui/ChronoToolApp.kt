@@ -17,6 +17,8 @@ import com.ignismark.chronotool.ui.screens.AddScreen
 import com.ignismark.chronotool.ui.screens.AddScreenViewModel
 import com.ignismark.chronotool.ui.screens.ChronoConvertViewModel
 import com.ignismark.chronotool.ui.screens.ConvertScreen
+import com.ignismark.chronotool.ui.screens.SubtractScreen
+import com.ignismark.chronotool.ui.screens.SubtractScreenViewModel
 
 @Composable
 fun ChronoToolApp() {
@@ -25,6 +27,9 @@ fun ChronoToolApp() {
         viewModel(factory = ChronoConvertViewModel.Factory)
     val addViewModel: AddScreenViewModel =
         viewModel(factory = AddScreenViewModel.Factory)
+    val subtractViewModel: SubtractScreenViewModel =
+        viewModel(factory = SubtractScreenViewModel.Factory)
+
     val navController: NavHostController = rememberNavController()
 
     Scaffold(
@@ -50,9 +55,9 @@ fun ChronoToolApp() {
                 )
             }
             composable(route = ChronoToolRoutes.Subtract.title) {
-                ConvertScreen(
+                SubtractScreen(
                     modifier = Modifier.padding(innerPadding),
-                    viewModel = convertViewModel
+                    viewModel = subtractViewModel
                 )
             }
         }
