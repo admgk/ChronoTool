@@ -15,8 +15,8 @@ import com.ignismark.chronotool.ui.components.ChronoToolTopBar
 import com.ignismark.chronotool.ui.components.ChronoToolRoutes
 import com.ignismark.chronotool.ui.screens.AddScreen
 import com.ignismark.chronotool.ui.screens.AddScreenViewModel
-import com.ignismark.chronotool.ui.screens.ChronoConvert
 import com.ignismark.chronotool.ui.screens.ChronoConvertViewModel
+import com.ignismark.chronotool.ui.screens.ConvertScreen
 
 @Composable
 fun ChronoToolApp() {
@@ -38,7 +38,7 @@ fun ChronoToolApp() {
             startDestination = ChronoToolRoutes.Convert.title
         ) {
             composable(route = ChronoToolRoutes.Convert.title) {
-                ChronoConvert(
+                ConvertScreen(
                     modifier = Modifier.padding(innerPadding),
                     viewModel = convertViewModel
                 )
@@ -50,7 +50,7 @@ fun ChronoToolApp() {
                 )
             }
             composable(route = ChronoToolRoutes.Subtract.title) {
-                ChronoConvert(
+                ConvertScreen(
                     modifier = Modifier.padding(innerPadding),
                     viewModel = convertViewModel
                 )
