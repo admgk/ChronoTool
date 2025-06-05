@@ -25,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.ignismark.chronotool.ui.components.HistoryHorizontalGrid
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -130,35 +131,7 @@ fun SubtractScreen(
 
             HorizontalDivider()
 
-            LazyHorizontalGrid(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(96.dp),
-                rows = GridCells.Fixed(3),
-                userScrollEnabled = true,
-                horizontalArrangement = Arrangement.Start,
-                verticalArrangement = Arrangement.Top,
-            ) {
-                items(uiState.valuesList.size) { index ->
-                    Card(
-                        modifier = Modifier
-                            .aspectRatio(3f)
-                            .padding(2.dp),
-                        border = BorderStroke(1.dp, Color.Black)
-                    ) {
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(text = uiState
-                                .valuesList[index]
-                                .toComponents { hours, minutes, seconds, nanoseconds ->
-                                "${hours}H ${minutes}M ${seconds}S" }
-                            )
-                        }
-                    }
-                }
-            }
+            HistoryHorizontalGrid(uiState.valuesList)
 
             HorizontalDivider()
 

@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.ignismark.chronotool.ui.components.HistoryHorizontalGrid
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -74,19 +75,7 @@ fun AddScreen(
 
             HorizontalDivider()
 
-            LazyHorizontalGrid(
-                modifier = Modifier.fillMaxWidth().height(96.dp),
-                rows = GridCells.Fixed(3),
-                userScrollEnabled = true,
-                horizontalArrangement = Arrangement.Start,
-                verticalArrangement = Arrangement.Top,
-            ) {
-                items(uiState.valuesList.size) { index ->
-                    Card {
-                        Text(text = uiState.valuesList[index].toString())
-                    }
-                }
-            }
+            HistoryHorizontalGrid(uiState.valuesList)
 
             HorizontalDivider()
 
