@@ -1,13 +1,8 @@
 package com.ignismark.chronotool.ui.screens
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
-import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.OutlinedButton
@@ -17,14 +12,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.ignismark.chronotool.ui.components.HistoryHorizontalGrid
+import com.ignismark.chronotool.ui.components.InputForm
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddScreen(
     modifier: Modifier = Modifier,
-    viewModel: AddScreenViewModel
+    viewModel: ChronoToolViewModel
 ) {
 
     val uiState = viewModel.uiState.collectAsState().value
@@ -33,35 +28,9 @@ fun AddScreen(
         modifier = modifier
     ) {
         Column {
-            OutlinedTextField(
-                value = uiState.inputHours,
-                onValueChange = {
-                    viewModel.updateInputHours(it)
-                    viewModel.calculatePartialDuration()
-                },
-                label = {
-                    Text(text = "Hours")
-                }
-            )
-            OutlinedTextField(
-                value = uiState.inputMinutes,
-                onValueChange = {
-                    viewModel.updateInputMinutes(it)
-                    viewModel.calculatePartialDuration()
-                },
-                label = {
-                    Text(text = "Minutes")
-                }
-            )
-            OutlinedTextField(
-                value = uiState.inputSeconds,
-                onValueChange = {
-                    viewModel.updateInputSeconds(it)
-                    viewModel.calculatePartialDuration()
-                },
-                label = {
-                    Text(text = "Seconds")
-                }
+            InputForm(
+                uiState = uiState,
+                viewModel = viewModel
             )
             OutlinedButton(
                 onClick = {

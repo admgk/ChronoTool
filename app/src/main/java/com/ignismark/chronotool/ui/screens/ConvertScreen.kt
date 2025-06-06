@@ -10,11 +10,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import com.ignismark.chronotool.ui.components.InputForm
 
 @Composable
 fun ConvertScreen(
     modifier: Modifier = Modifier,
-    viewModel: ChronoConvertViewModel
+    viewModel: ChronoToolViewModel
 ) {
 
     val uiState = viewModel.uiState.collectAsState().value
@@ -23,36 +24,11 @@ fun ConvertScreen(
         modifier = modifier
     ) {
         Column {
-            OutlinedTextField(
-                value = uiState.inputHours,
-                onValueChange = {
-                    viewModel.updateInputHours(it)
-                    viewModel.calculateDuration()
-                },
-                label = {
-                    Text(text = "Hours")
-                }
+            InputForm(
+                uiState = uiState,
+                viewModel = viewModel
             )
-            OutlinedTextField(
-                value = uiState.inputMinutes,
-                onValueChange = {
-                    viewModel.updateInputMinutes(it)
-                    viewModel.calculateDuration()
-                },
-                label = {
-                    Text(text = "Minutes")
-                }
-            )
-            OutlinedTextField(
-                value = uiState.inputSeconds,
-                onValueChange = {
-                    viewModel.updateInputSeconds(it)
-                    viewModel.calculateDuration()
-                },
-                label = {
-                    Text(text = "Seconds")
-                }
-            )
+
             HorizontalDivider()
             Column {
                 Row(modifier = Modifier.fillMaxWidth()) {
@@ -86,7 +62,7 @@ fun ConvertScreen(
                 }
                 Row(modifier = Modifier.fillMaxWidth()) {
                     OutlinedTextField(
-                        value = uiState.outputDuration.inWholeMinutes.toString(),
+                        value = uiState.convertOutputDuration.inWholeMinutes.toString(),
                         onValueChange = { },
                         label = {
                             Text(text = "M")
@@ -106,7 +82,7 @@ fun ConvertScreen(
                 }
                 Row {
                     OutlinedTextField(
-                        value = uiState.outputDuration.inWholeSeconds.toString(),
+                        value = uiState.convertOutputDuration.inWholeSeconds.toString(),
                         onValueChange = { },
                         label = {
                             Text(text = "S")
