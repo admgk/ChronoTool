@@ -69,13 +69,23 @@ class ChronoToolViewModel : ViewModel() {
         val minutes = _uiState.value.convertInputMinutes.toLongOrNull() ?: 0
         val seconds = _uiState.value.convertInputSeconds.toLongOrNull() ?: 0
         val duration = hours.hours + minutes.minutes + seconds.seconds
-        _uiState.value = _uiState.value.copy(convertOutputDuration = duration)
+        when (_uiState.value.currentRoute) {
+            ChronoToolRoutes.Convert -> {
+                _uiState.value = _uiState.value.copy(convertOutputDuration = duration)
+            }
+            ChronoToolRoutes.Add -> {
+                _uiState.value = _uiState.value.copy(totalDuration = duration)
+            }
+            ChronoToolRoutes.Subtract -> {
+                //_uiState.value = _uiState.value.copy(temporaryDuration = duration)
+            }
+        }
     }
 
     fun saveAndClearPartialDuration() {
         val duration = _uiState.value.partialDuration
         if (duration != Duration.ZERO) {
-            _uiState.value = _uiState.value.copy(valuesList = _uiState.value.valuesList + duration)
+            _uiState.value = _uiState.value.copy(addValuesList = _uiState.value.addValuesList + duration)
             _uiState.value = _uiState.value.copy(partialDuration = Duration.ZERO)
         }
     }
@@ -93,18 +103,120 @@ class ChronoToolViewModel : ViewModel() {
         _uiState.value = _uiState.value.copy(totalDuration = duration)
     }
 
-    fun getHours(): String {
+    fun saveAndClearSubtrahendDuration() {
+        val duration = _uiState.value.subtrahendDuration
+        if (duration != Duration.ZERO) {
+            _uiState.value = _uiState.value.copy(subtractValuesList = _uiState.value.subtractValuesList + duration)
+            _uiState.value = _uiState.value.copy(subtrahendDuration = Duration.ZERO)
+        }
+    }
+
+    fun calculateTemporaryDuration() {
+        val hours = _uiState.value.subtractInputHours.toLongOrNull() ?: 0
+        val minutes = _uiState.value.subtractInputMinutes.toLongOrNull() ?: 0
+        val seconds = _uiState.value.subtractInputSeconds.toLongOrNull() ?: 0
+        val duration = hours.hours + minutes.minutes + seconds.seconds
+        _uiState.value = _uiState.value.copy(temporaryDuration = duration)
+    }
+
+    fun clearTemporaryDuration() {
+        _uiState.value = _uiState.value.copy(
+            subtractInputHours = "",
+            subtractInputMinutes = "",
+            subtractInputSeconds = "",
+            temporaryDuration = Duration.ZERO)
+    }
+
+    fun clearScreen() {
+        _uiState.value = _uiState.value.copy(
+            subtractInputHours = "",
+            subtractInputMinutes = "",
+            subtractInputSeconds = "",
+            subtractValuesList = emptyList(),
+            temporaryDuration = Duration.ZERO,
+            minuendDuration = Duration.ZERO,
+            subtrahendDuration = Duration.ZERO,
+            differenceDuration = Duration.ZERO
+        )
+    }
+
+    fun setMinuendDuration() {
+        val duration = _uiState.value.temporaryDuration
+        _uiState.value = _uiState.value.copy(minuendDuration = duration)
+    }
+
+    fun setSubtrahendDuration() {
+        val duration = _uiState.value.temporaryDuration
+        _uiState.value = _uiState.value.copy(subtrahendDuration = duration)
+    }
+
+    fun calculateDifferenceDuration() {
+        val duration = _uiState.value.minuendDuration - _uiState.value.subtrahendDuration
+        _uiState.value = _uiState.value.copy(differenceDuration = duration)
+    }
+
+    fun updateMinuendDuration() {
+        val duration = _uiState.value.differenceDuration
+        _uiState.value = _uiState.value.copy(minuendDuration = duration)
+    }
+
+    fun getDifferenceHours(): String {
+        return _uiState.value.differenceDuration.toComponents { hours, minutes, seconds, nanoseconds
+            -> hours }.toString()
+    }
+
+    fun getDifferenceMinutes(): String {
+        return _uiState.value.differenceDuration.toComponents { hours, minutes, seconds, nanoseconds
+            -> minutes }.toString()
+    }
+
+    fun getDifferenceSeconds(): String {
+        return _uiState.value.differenceDuration.toComponents { hours, minutes, seconds, nanoseconds
+            -> seconds }.toString()
+    }
+
+    fun getMinuendHours(): String {
+        return _uiState.value.minuendDuration.toComponents { hours, minutes, seconds, nanoseconds
+            -> hours }.toString()
+    }
+
+    fun getMinuendMinutes(): String {
+        return _uiState.value.minuendDuration.toComponents { hours, minutes, seconds, nanoseconds
+            -> minutes }.toString()
+    }
+
+    fun getMinuendSeconds(): String {
+        return _uiState.value.minuendDuration.toComponents { hours, minutes, seconds, nanoseconds
+            -> seconds }.toString()
+    }
+
+    fun getConvertHours(): String {
         return _uiState.value.convertOutputDuration.toComponents { hours, minutes, seconds, nanoseconds
             -> hours }.toString()
     }
 
-    fun getMinutes(): String {
+    fun getConvertMinutes(): String {
         return _uiState.value.convertOutputDuration.toComponents { hours, minutes, seconds, nanoseconds
             -> minutes }.toString()
     }
 
-    fun getSeconds(): String {
+    fun getConvertSeconds(): String {
         return _uiState.value.convertOutputDuration.toComponents { hours, minutes, seconds, nanoseconds
+            -> seconds }.toString()
+    }
+
+    fun getAddHours(): String {
+        return _uiState.value.totalDuration.toComponents { hours, minutes, seconds, nanoseconds
+            -> hours }.toString()
+    }
+
+    fun getAddMinutes(): String {
+        return _uiState.value.totalDuration.toComponents { hours, minutes, seconds, nanoseconds
+            -> minutes }.toString()
+    }
+
+    fun getAddSeconds(): String {
+        return _uiState.value.totalDuration.toComponents { hours, minutes, seconds, nanoseconds
             -> seconds }.toString()
     }
 
@@ -129,7 +241,12 @@ data class ChronoToolUiState(
     val addInputSeconds: String = "",
     val subtractInputSeconds: String = "",
     val convertOutputDuration: Duration = Duration.ZERO,
-    val valuesList: List<Duration> = emptyList(),
+    val addValuesList: List<Duration> = emptyList(),
+    val subtractValuesList: List<Duration> = emptyList(),
     val partialDuration: Duration = Duration.ZERO,
-    val totalDuration: Duration = Duration.ZERO
+    val totalDuration: Duration = Duration.ZERO,
+    val temporaryDuration: Duration = Duration.ZERO,
+    val minuendDuration: Duration = Duration.ZERO,
+    val subtrahendDuration: Duration = Duration.ZERO,
+    val differenceDuration: Duration = Duration.ZERO
 )

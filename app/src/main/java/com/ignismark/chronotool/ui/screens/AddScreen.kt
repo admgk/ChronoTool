@@ -34,7 +34,7 @@ fun AddScreen(
             )
             OutlinedButton(
                 onClick = {
-                    viewModel.calculateTotalDuration()
+                    viewModel.calculateDuration()
                     viewModel.saveAndClearPartialDuration()
                     viewModel.updateInputHours("")
                     viewModel.updateInputMinutes("")
@@ -44,14 +44,14 @@ fun AddScreen(
 
             HorizontalDivider()
 
-            HistoryHorizontalGrid(uiState.valuesList)
+            HistoryHorizontalGrid(uiState.addValuesList)
 
             HorizontalDivider()
 
             Column {
                 Row(modifier = Modifier.fillMaxWidth()) {
                     OutlinedTextField(
-                        value = viewModel.getHours(),
+                        value = viewModel.getAddHours(),
                         onValueChange = { },
                         label = {
                             Text(text = "H")
@@ -60,7 +60,7 @@ fun AddScreen(
                         modifier = Modifier.weight(1f)
                     )
                     OutlinedTextField(
-                        value = viewModel.getMinutes(),
+                        value = viewModel.getAddMinutes(),
                         onValueChange = { },
                         label = {
                             Text(text = "M")
@@ -69,7 +69,7 @@ fun AddScreen(
                         modifier = Modifier.weight(1f)
                     )
                     OutlinedTextField(
-                        value = viewModel.getSeconds(),
+                        value = viewModel.getAddSeconds(),
                         onValueChange = { },
                         label = {
                             Text(text = "S")
@@ -89,7 +89,7 @@ fun AddScreen(
                         modifier = Modifier.weight(1f)
                     )
                     OutlinedTextField(
-                        value = viewModel.getSeconds(),
+                        value = viewModel.getAddSeconds(),
                         onValueChange = { },
                         label = {
                             Text(text = "S")

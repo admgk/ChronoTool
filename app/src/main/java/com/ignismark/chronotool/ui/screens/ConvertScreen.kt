@@ -33,7 +33,7 @@ fun ConvertScreen(
             Column {
                 Row(modifier = Modifier.fillMaxWidth()) {
                     OutlinedTextField(
-                        value = viewModel.getHours(),
+                        value = viewModel.getConvertHours(),
                         onValueChange = { },
                         label = {
                             Text(text = "H")
@@ -42,7 +42,7 @@ fun ConvertScreen(
                         modifier = Modifier.weight(1f)
                     )
                     OutlinedTextField(
-                        value = viewModel.getMinutes(),
+                        value = viewModel.getConvertMinutes(),
                         onValueChange = { },
                         label = {
                             Text(text = "M")
@@ -51,7 +51,7 @@ fun ConvertScreen(
                         modifier = Modifier.weight(1f)
                     )
                     OutlinedTextField(
-                        value = viewModel.getSeconds(),
+                        value = viewModel.getConvertSeconds(),
                         onValueChange = { },
                         label = {
                             Text(text = "S")
@@ -71,7 +71,7 @@ fun ConvertScreen(
                         modifier = Modifier.weight(1f)
                     )
                     OutlinedTextField(
-                        value = viewModel.getSeconds(),
+                        value = viewModel.getConvertSeconds(),
                         onValueChange = { },
                         label = {
                             Text(text = "S")
