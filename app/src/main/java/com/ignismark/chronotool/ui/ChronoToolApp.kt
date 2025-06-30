@@ -14,21 +14,15 @@ import com.ignismark.chronotool.ui.components.ChronoToolNavigationBar
 import com.ignismark.chronotool.ui.components.ChronoToolTopBar
 import com.ignismark.chronotool.ui.components.ChronoToolRoutes
 import com.ignismark.chronotool.ui.screens.AddScreen
-import com.ignismark.chronotool.ui.screens.AddScreenViewModel
-import com.ignismark.chronotool.ui.screens.ChronoConvertViewModel
+import com.ignismark.chronotool.ui.screens.ChronoToolViewModel
 import com.ignismark.chronotool.ui.screens.ConvertScreen
 import com.ignismark.chronotool.ui.screens.SubtractScreen
-import com.ignismark.chronotool.ui.screens.SubtractScreenViewModel
 
 @Composable
 fun ChronoToolApp() {
 
-    val convertViewModel: ChronoConvertViewModel =
-        viewModel(factory = ChronoConvertViewModel.Factory)
-    val addViewModel: AddScreenViewModel =
-        viewModel(factory = AddScreenViewModel.Factory)
-    val subtractViewModel: SubtractScreenViewModel =
-        viewModel(factory = SubtractScreenViewModel.Factory)
+    val chronoViewModel: ChronoToolViewModel =
+        viewModel(factory = ChronoToolViewModel.Factory)
 
     val navController: NavHostController = rememberNavController()
 
@@ -43,21 +37,24 @@ fun ChronoToolApp() {
             startDestination = ChronoToolRoutes.Convert.title
         ) {
             composable(route = ChronoToolRoutes.Convert.title) {
+                chronoViewModel.updateCurrentRoute(ChronoToolRoutes.Convert)
                 ConvertScreen(
                     modifier = Modifier.padding(innerPadding),
-                    viewModel = convertViewModel
+                    viewModel = chronoViewModel
                 )
             }
             composable(route = ChronoToolRoutes.Add.title) {
+                chronoViewModel.updateCurrentRoute(ChronoToolRoutes.Add)
                 AddScreen(
                     modifier = Modifier.padding(innerPadding),
-                    viewModel = addViewModel
+                    viewModel = chronoViewModel
                 )
             }
             composable(route = ChronoToolRoutes.Subtract.title) {
+                chronoViewModel.updateCurrentRoute(ChronoToolRoutes.Subtract)
                 SubtractScreen(
                     modifier = Modifier.padding(innerPadding),
-                    viewModel = subtractViewModel
+                    viewModel = chronoViewModel
                 )
             }
         }
