@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import com.ignismark.chronotool.ui.components.InputForm
 
 @Composable
 fun ConvertScreen(
@@ -23,37 +24,26 @@ fun ConvertScreen(
         modifier = modifier
     ) {
         Column {
-            OutlinedTextField(
-                value = uiState.inputHours,
-                onValueChange = {
+            InputForm(
+                hours = uiState.inputHours,
+                minutes = uiState.inputMinutes,
+                seconds = uiState.inputSeconds,
+                onChangeHours = {
                     viewModel.updateInputHours(it)
-                    viewModel.calculateDuration()
+                    viewModel.updateOutputDuration()
                 },
-                label = {
-                    Text(text = "Hours")
-                }
-            )
-            OutlinedTextField(
-                value = uiState.inputMinutes,
-                onValueChange = {
+                onChangeMinutes = {
                     viewModel.updateInputMinutes(it)
-                    viewModel.calculateDuration()
+                    viewModel.updateOutputDuration()
                 },
-                label = {
-                    Text(text = "Minutes")
-                }
-            )
-            OutlinedTextField(
-                value = uiState.inputSeconds,
-                onValueChange = {
+                onChangeSeconds = {
                     viewModel.updateInputSeconds(it)
-                    viewModel.calculateDuration()
-                },
-                label = {
-                    Text(text = "Seconds")
+                    viewModel.updateOutputDuration()
                 }
             )
+
             HorizontalDivider()
+
             Column {
                 Row(modifier = Modifier.fillMaxWidth()) {
                     OutlinedTextField(

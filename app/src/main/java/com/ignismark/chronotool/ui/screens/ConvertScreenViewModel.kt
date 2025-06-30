@@ -4,13 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.ignismark.chronotool.ui.utils.calculateDuration
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlin.time.Duration
-import kotlin.time.Duration.Companion.hours
-import kotlin.time.Duration.Companion.minutes
-import kotlin.time.Duration.Companion.seconds
 
 class ChronoConvertViewModel : ViewModel() {
 
@@ -29,11 +27,16 @@ class ChronoConvertViewModel : ViewModel() {
         _uiState.value = _uiState.value.copy(inputSeconds = input)
     }
 
-    fun calculateDuration() {
-        val hours = _uiState.value.inputHours.toLongOrNull() ?: 0
-        val minutes = _uiState.value.inputMinutes.toLongOrNull() ?: 0
-        val seconds = _uiState.value.inputSeconds.toLongOrNull() ?: 0
-        val duration = hours.hours + minutes.minutes + seconds.seconds
+    fun calculateOutputDuration() : Duration {
+        return calculateDuration(
+            inputHours = _uiState.value.inputHours,
+            inputMinutes = _uiState.value.inputMinutes,
+            inputSeconds = _uiState.value.inputSeconds
+        )
+    }
+
+    fun updateOutputDuration() {
+        val duration = calculateOutputDuration()
         _uiState.value = _uiState.value.copy(outputDuration = duration)
     }
 
