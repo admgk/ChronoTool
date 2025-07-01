@@ -15,7 +15,7 @@ import com.ignismark.chronotool.ui.components.InputForm
 @Composable
 fun ConvertScreen(
     modifier: Modifier = Modifier,
-    viewModel: ChronoConvertViewModel
+    viewModel: ConvertScreenViewModel
 ) {
 
     val uiState = viewModel.uiState.collectAsState().value

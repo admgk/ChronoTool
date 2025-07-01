@@ -10,10 +10,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlin.time.Duration
 
-class ConvertScreenViewModel : ViewModel() {
+class AddScreenViewModel : ViewModel() {
 
-    private val _uiState = MutableStateFlow(ConvertScreenUiState())
-    val uiState: StateFlow<ConvertScreenUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(AddScreenUiState())
+    val uiState: StateFlow<AddScreenUiState> = _uiState.asStateFlow()
 
     fun updateInputHours(input: String) {
         _uiState.value = _uiState.value.copy(inputHours = input)
@@ -27,7 +27,7 @@ class ConvertScreenViewModel : ViewModel() {
         _uiState.value = _uiState.value.copy(inputSeconds = input)
     }
 
-    fun calculateOutputDuration() : Duration {
+    fun calculateInputDuration() : Duration {
         return calculateDuration(
             inputHours = _uiState.value.inputHours,
             inputMinutes = _uiState.value.inputMinutes,
@@ -35,38 +35,52 @@ class ConvertScreenViewModel : ViewModel() {
         )
     }
 
-    fun updateOutputDuration() {
-        val duration = calculateOutputDuration()
-        _uiState.value = _uiState.value.copy(outputDuration = duration)
+    fun addDuration() {
+        val inputDuration = calculateInputDuration()
+        if (inputDuration != Duration.ZERO) {
+            _uiState.value = _uiState.value.copy(valuesList = _uiState.value.valuesList + inputDuration)
+            val totalDuration = _uiState.value.totalDuration + inputDuration
+            _uiState.value = _uiState.value.copy(totalDuration = totalDuration)
+        }
+    }
+
+    fun clearInputForm() {
+        _uiState.value = _uiState.value.copy(
+            inputHours = "",
+            inputMinutes = "",
+            inputSeconds = ""
+        )
     }
 
     fun getHours(): String {
-        return _uiState.value.outputDuration.toComponents { hours, minutes, seconds, nanoseconds
+        return _uiState.value.totalDuration.toComponents { hours, minutes, seconds, nanoseconds
             -> hours }.toString()
     }
 
     fun getMinutes(): String {
-        return _uiState.value.outputDuration.toComponents { hours, minutes, seconds, nanoseconds
+        return _uiState.value.totalDuration.toComponents { hours, minutes, seconds, nanoseconds
             -> minutes }.toString()
     }
 
     fun getSeconds(): String {
-        return _uiState.value.outputDuration.toComponents { hours, minutes, seconds, nanoseconds
+        return _uiState.value.totalDuration.toComponents { hours, minutes, seconds, nanoseconds
             -> seconds }.toString()
     }
 
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                ConvertScreenViewModel()
+                AddScreenViewModel()
             }
         }
     }
 }
 
-data class ConvertScreenUiState(
+data class AddScreenUiState(
     val inputHours: String = "",
     val inputMinutes: String = "",
     val inputSeconds: String = "",
-    val outputDuration: Duration = Duration.ZERO
+    val valuesList: List<Duration> = emptyList(),
+    val totalDuration: Duration = Duration.ZERO
 )
+

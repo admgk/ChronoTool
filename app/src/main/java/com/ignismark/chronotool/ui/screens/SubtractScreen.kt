@@ -13,12 +13,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import com.ignismark.chronotool.ui.components.HistoryHorizontalGrid
+import com.ignismark.chronotool.ui.components.InputForm
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SubtractScreen(
     modifier: Modifier = Modifier,
-    viewModel: ChronoToolViewModel
+    viewModel: SubtractScreenViewModel
 ) {
 
     val uiState = viewModel.uiState.collectAsState().value
@@ -60,34 +61,18 @@ fun SubtractScreen(
 
             HorizontalDivider()
 
-            OutlinedTextField(
-                value = uiState.subtractInputHours,
-                onValueChange = {
+            InputForm(
+                hours = uiState.inputHours,
+                minutes = uiState.inputMinutes,
+                seconds = uiState.inputSeconds,
+                onChangeHours = {
                     viewModel.updateInputHours(it)
-                    viewModel.calculateTemporaryDuration()
                 },
-                label = {
-                    Text(text = "Hours")
-                }
-            )
-            OutlinedTextField(
-                value = uiState.subtractInputMinutes,
-                onValueChange = {
+                onChangeMinutes = {
                     viewModel.updateInputMinutes(it)
-                    viewModel.calculateTemporaryDuration()
                 },
-                label = {
-                    Text(text = "Minutes")
-                }
-            )
-            OutlinedTextField(
-                value = uiState.subtractInputSeconds,
-                onValueChange = {
+                onChangeSeconds = {
                     viewModel.updateInputSeconds(it)
-                    viewModel.calculateTemporaryDuration()
-                },
-                label = {
-                    Text(text = "Seconds")
                 }
             )
 
@@ -95,17 +80,14 @@ fun SubtractScreen(
                 OutlinedButton(
                     onClick = {
                         viewModel.setMinuendDuration()
-                        viewModel.clearTemporaryDuration()
+                        viewModel.clearInputForm()
                     }
                 ) { Text(text = "Set") }
 
                 OutlinedButton(
                     onClick = {
-                        viewModel.setSubtrahendDuration()
-                        viewModel.clearTemporaryDuration()
-                        viewModel.calculateDifferenceDuration()
-                        viewModel.updateMinuendDuration()
-                        viewModel.saveAndClearSubtrahendDuration()
+                        viewModel.subtractDuration()
+                        viewModel.clearInputForm()
                     }
                 ) { Text(text = "Subtract") }
 
@@ -118,7 +100,7 @@ fun SubtractScreen(
 
             HorizontalDivider()
 
-            HistoryHorizontalGrid(uiState.subtractValuesList)
+            HistoryHorizontalGrid(uiState.valuesList)
 
             HorizontalDivider()
 

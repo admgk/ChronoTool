@@ -19,7 +19,7 @@ import com.ignismark.chronotool.ui.components.InputForm
 @Composable
 fun AddScreen(
     modifier: Modifier = Modifier,
-    viewModel: ChronoToolViewModel
+    viewModel: AddScreenViewModel
 ) {
 
     val uiState = viewModel.uiState.collectAsState().value
@@ -29,29 +29,36 @@ fun AddScreen(
     ) {
         Column {
             InputForm(
-                uiState = uiState,
-                viewModel = viewModel
+                hours = uiState.inputHours,
+                minutes = uiState.inputMinutes,
+                seconds = uiState.inputSeconds,
+                onChangeHours = {
+                    viewModel.updateInputHours(it)
+                },
+                onChangeMinutes = {
+                    viewModel.updateInputMinutes(it)
+                },
+                onChangeSeconds = {
+                    viewModel.updateInputSeconds(it)
+                }
             )
             OutlinedButton(
                 onClick = {
-                    viewModel.calculateDuration()
-                    viewModel.saveAndClearPartialDuration()
-                    viewModel.updateInputHours("")
-                    viewModel.updateInputMinutes("")
-                    viewModel.updateInputSeconds("")
+                    viewModel.addDuration()
+                    viewModel.clearInputForm()
                 }
             ) { Text(text = "Add") }
 
             HorizontalDivider()
 
-            HistoryHorizontalGrid(uiState.addValuesList)
+            HistoryHorizontalGrid(uiState.valuesList)
 
             HorizontalDivider()
 
             Column {
                 Row(modifier = Modifier.fillMaxWidth()) {
                     OutlinedTextField(
-                        value = viewModel.getAddHours(),
+                        value = viewModel.getHours(),
                         onValueChange = { },
                         label = {
                             Text(text = "H")
@@ -60,7 +67,7 @@ fun AddScreen(
                         modifier = Modifier.weight(1f)
                     )
                     OutlinedTextField(
-                        value = viewModel.getAddMinutes(),
+                        value = viewModel.getMinutes(),
                         onValueChange = { },
                         label = {
                             Text(text = "M")
@@ -69,7 +76,7 @@ fun AddScreen(
                         modifier = Modifier.weight(1f)
                     )
                     OutlinedTextField(
-                        value = viewModel.getAddSeconds(),
+                        value = viewModel.getSeconds(),
                         onValueChange = { },
                         label = {
                             Text(text = "S")
@@ -89,7 +96,7 @@ fun AddScreen(
                         modifier = Modifier.weight(1f)
                     )
                     OutlinedTextField(
-                        value = viewModel.getAddSeconds(),
+                        value = viewModel.getSeconds(),
                         onValueChange = { },
                         label = {
                             Text(text = "S")
