@@ -14,6 +14,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import com.ignismark.chronotool.ui.components.HistoryHorizontalGrid
 import com.ignismark.chronotool.ui.components.InputForm
+import com.ignismark.chronotool.ui.components.MinuendDurationPanel
 import com.ignismark.chronotool.ui.components.ResultBoard
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -30,35 +31,11 @@ fun SubtractScreen(
     ) {
 
         Column {
-            Row(modifier = Modifier.fillMaxWidth()) {
-                OutlinedTextField(
-                    value = viewModel.getMinuendHours(),
-                    onValueChange = { },
-                    label = {
-                        Text(text = "H")
-                    },
-                    readOnly = true,
-                    modifier = Modifier.weight(1f)
-                )
-                OutlinedTextField(
-                    value = viewModel.getMinuendMinutes(),
-                    onValueChange = { },
-                    label = {
-                        Text(text = "M")
-                    },
-                    readOnly = true,
-                    modifier = Modifier.weight(1f)
-                )
-                OutlinedTextField(
-                    value = viewModel.getMinuendSeconds(),
-                    onValueChange = { },
-                    label = {
-                        Text(text = "S")
-                    },
-                    readOnly = true,
-                    modifier = Modifier.weight(1f)
-                )
-            }
+            MinuendDurationPanel(
+                hours = viewModel.getMinuendHours(),
+                minutes = viewModel.getMinuendMinutes(),
+                seconds = viewModel.getMinuendSeconds()
+            )
 
             HorizontalDivider()
 
