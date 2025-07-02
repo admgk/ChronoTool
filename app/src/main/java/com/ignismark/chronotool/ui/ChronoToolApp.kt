@@ -12,7 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ignismark.chronotool.ui.components.ChronoToolNavigationBar
 import com.ignismark.chronotool.ui.components.ChronoToolTopBar
-import com.ignismark.chronotool.ui.components.ChronoToolRoutes
+import com.ignismark.chronotool.ui.utils.ChronoToolRoutes
 import com.ignismark.chronotool.ui.screens.AddScreen
 import com.ignismark.chronotool.ui.screens.AddScreenViewModel
 import com.ignismark.chronotool.ui.screens.ConvertScreen
