@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import com.ignismark.chronotool.ui.components.ButtonPanel
 import com.ignismark.chronotool.ui.components.HistoryHorizontalGrid
 import com.ignismark.chronotool.ui.components.InputForm
 import com.ignismark.chronotool.ui.components.MinuendDurationPanel
@@ -54,27 +55,24 @@ fun SubtractScreen(
                 }
             )
 
-            Row {
-                OutlinedButton(
-                    onClick = {
-                        viewModel.setMinuendDuration()
-                        viewModel.clearInputForm()
-                    }
-                ) { Text(text = "Set") }
+            HorizontalDivider()
 
-                OutlinedButton(
-                    onClick = {
-                        viewModel.subtractDuration()
-                        viewModel.clearInputForm()
-                    }
-                ) { Text(text = "Subtract") }
-
-                OutlinedButton(
-                    onClick = {
-                        viewModel.clearScreen()
-                    }
-                ) { Text(text = "Clear") }
-            }
+            ButtonPanel(
+                isSet = true,
+                isSubtract = true,
+                isClear = true,
+                onClickSet = {
+                    viewModel.setMinuendDuration()
+                    viewModel.clearInputForm()
+                },
+                onClickSubtract = {
+                    viewModel.subtractDuration()
+                    viewModel.clearInputForm()
+                },
+                onClickClear = {
+                    viewModel.clearScreen()
+                }
+            )
 
             HorizontalDivider()
 

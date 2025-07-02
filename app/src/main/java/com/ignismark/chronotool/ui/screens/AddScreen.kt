@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import com.ignismark.chronotool.ui.components.ButtonPanel
 import com.ignismark.chronotool.ui.components.HistoryHorizontalGrid
 import com.ignismark.chronotool.ui.components.InputForm
 import com.ignismark.chronotool.ui.components.ResultBoard
@@ -40,12 +41,20 @@ fun AddScreen(
                     viewModel.updateInputSeconds(it)
                 }
             )
-            OutlinedButton(
-                onClick = {
+
+            HorizontalDivider()
+
+            ButtonPanel(
+                isAdd = true,
+                isClear = true,
+                onClickAdd = {
                     viewModel.addDuration()
                     viewModel.clearInputForm()
+                },
+                onClickClear = {
+                    viewModel.clearScreen()
                 }
-            ) { Text(text = "Add") }
+            )
 
             HorizontalDivider()
 

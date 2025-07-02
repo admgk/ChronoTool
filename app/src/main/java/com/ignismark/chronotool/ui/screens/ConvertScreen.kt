@@ -6,6 +6,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import com.ignismark.chronotool.ui.components.ButtonPanel
 import com.ignismark.chronotool.ui.components.InputForm
 import com.ignismark.chronotool.ui.components.ResultBoard
 
@@ -36,6 +37,15 @@ fun ConvertScreen(
                 onChangeSeconds = {
                     viewModel.updateInputSeconds(it)
                     viewModel.updateOutputDuration()
+                }
+            )
+
+            HorizontalDivider()
+
+            ButtonPanel(
+                isClear = true,
+                onClickClear = {
+                    viewModel.clearScreen()
                 }
             )
 

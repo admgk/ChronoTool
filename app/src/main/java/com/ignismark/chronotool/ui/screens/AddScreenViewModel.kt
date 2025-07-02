@@ -68,6 +68,16 @@ class AddScreenViewModel : ViewModel() {
         return _uiState.value.outputDuration.inWholeSeconds.toString()
     }
 
+    fun clearScreen() {
+        _uiState.value = _uiState.value.copy(
+            inputHours = "",
+            inputMinutes = "",
+            inputSeconds = "",
+            valuesList = emptyList(),
+            outputDuration = Duration.ZERO
+        )
+    }
+
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
