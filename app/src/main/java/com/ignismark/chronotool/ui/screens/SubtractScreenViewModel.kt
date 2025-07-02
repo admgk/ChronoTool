@@ -54,11 +54,11 @@ class SubtractScreenViewModel : ViewModel() {
         val inputDuration = calculateInputDuration()
         if (inputDuration != Duration.ZERO) {
             _uiState.value = _uiState.value.copy(valuesList = _uiState.value.valuesList + inputDuration)
-            if (_uiState.value.differenceDuration == Duration.ZERO) {
-                _uiState.value = _uiState.value.copy(differenceDuration = _uiState.value.minuendDuration)
+            if (_uiState.value.outputDuration == Duration.ZERO) {
+                _uiState.value = _uiState.value.copy(outputDuration = _uiState.value.minuendDuration)
             }
-            val duration = _uiState.value.differenceDuration - inputDuration
-            _uiState.value = _uiState.value.copy(differenceDuration = duration)
+            val duration = _uiState.value.outputDuration - inputDuration
+            _uiState.value = _uiState.value.copy(outputDuration = duration)
         }
     }
 
@@ -69,23 +69,8 @@ class SubtractScreenViewModel : ViewModel() {
             inputSeconds = "",
             valuesList = emptyList(),
             minuendDuration = Duration.ZERO,
-            differenceDuration = Duration.ZERO
+            outputDuration = Duration.ZERO
         )
-    }
-
-    fun getDifferenceHours(): String {
-        return _uiState.value.differenceDuration.toComponents { hours, minutes, seconds, nanoseconds
-            -> hours }.toString()
-    }
-
-    fun getDifferenceMinutes(): String {
-        return _uiState.value.differenceDuration.toComponents { hours, minutes, seconds, nanoseconds
-            -> minutes }.toString()
-    }
-
-    fun getDifferenceSeconds(): String {
-        return _uiState.value.differenceDuration.toComponents { hours, minutes, seconds, nanoseconds
-            -> seconds }.toString()
     }
 
     fun getMinuendHours(): String {
@@ -103,6 +88,22 @@ class SubtractScreenViewModel : ViewModel() {
             -> seconds }.toString()
     }
 
+    fun getDurationHMS(): List<String> {
+        return _uiState.value.outputDuration.toComponents { hours, minutes, seconds, nanoseconds
+            -> listOf(hours.toString(), minutes.toString(), seconds.toString()) }
+    }
+
+    fun getDurationMS(): List<String> {
+        val minutes = _uiState.value.outputDuration.inWholeMinutes.toString()
+        val seconds = _uiState.value.outputDuration.toComponents { hours, minutes, seconds, nanoseconds
+            -> seconds }.toString()
+        return listOf(minutes, seconds)
+    }
+
+    fun getDurationS(): String {
+        return _uiState.value.outputDuration.inWholeSeconds.toString()
+    }
+
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
@@ -118,5 +119,5 @@ data class SubtractScreenUiState(
     val inputSeconds: String = "",
     val valuesList: List<Duration> = emptyList(),
     val minuendDuration: Duration = Duration.ZERO,
-    val differenceDuration: Duration = Duration.ZERO
+    val outputDuration: Duration = Duration.ZERO
 )

@@ -14,6 +14,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import com.ignismark.chronotool.ui.components.HistoryHorizontalGrid
 import com.ignismark.chronotool.ui.components.InputForm
+import com.ignismark.chronotool.ui.components.ResultBoard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -104,68 +105,11 @@ fun SubtractScreen(
 
             HorizontalDivider()
 
-            Column {
-                Row(modifier = Modifier.fillMaxWidth()) {
-                    OutlinedTextField(
-                        value = viewModel.getDifferenceHours(),
-                        onValueChange = { },
-                        label = {
-                            Text(text = "H")
-                        },
-                        readOnly = true,
-                        modifier = Modifier.weight(1f)
-                    )
-                    OutlinedTextField(
-                        value = viewModel.getDifferenceMinutes(),
-                        onValueChange = { },
-                        label = {
-                            Text(text = "M")
-                        },
-                        readOnly = true,
-                        modifier = Modifier.weight(1f)
-                    )
-                    OutlinedTextField(
-                        value = viewModel.getDifferenceSeconds(),
-                        onValueChange = { },
-                        label = {
-                            Text(text = "S")
-                        },
-                        readOnly = true,
-                        modifier = Modifier.weight(1f)
-                    )
-                }
-                Row(modifier = Modifier.fillMaxWidth()) {
-                    OutlinedTextField(
-                        value = uiState.differenceDuration.inWholeMinutes.toString(),
-                        onValueChange = { },
-                        label = {
-                            Text(text = "M")
-                        },
-                        readOnly = true,
-                        modifier = Modifier.weight(1f)
-                    )
-                    OutlinedTextField(
-                        value = viewModel.getDifferenceSeconds(),
-                        onValueChange = { },
-                        label = {
-                            Text(text = "S")
-                        },
-                        readOnly = true,
-                        modifier = Modifier.weight(1f)
-                    )
-                }
-                Row {
-                    OutlinedTextField(
-                        value = uiState.differenceDuration.inWholeSeconds.toString(),
-                        onValueChange = { },
-                        label = {
-                            Text(text = "S")
-                        },
-                        readOnly = true,
-                        modifier = Modifier.weight(1f)
-                    )
-                }
-            }
+            ResultBoard(
+                hms = viewModel.getDurationHMS(),
+                ms = viewModel.getDurationMS(),
+                s = viewModel.getDurationS()
+            )
         }
     }
 }

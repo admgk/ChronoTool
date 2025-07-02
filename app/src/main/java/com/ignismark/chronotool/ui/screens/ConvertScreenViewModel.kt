@@ -40,19 +40,20 @@ class ConvertScreenViewModel : ViewModel() {
         _uiState.value = _uiState.value.copy(outputDuration = duration)
     }
 
-    fun getHours(): String {
+    fun getDurationHMS(): List<String> {
         return _uiState.value.outputDuration.toComponents { hours, minutes, seconds, nanoseconds
-            -> hours }.toString()
+            -> listOf(hours.toString(), minutes.toString(), seconds.toString()) }
     }
 
-    fun getMinutes(): String {
-        return _uiState.value.outputDuration.toComponents { hours, minutes, seconds, nanoseconds
-            -> minutes }.toString()
-    }
-
-    fun getSeconds(): String {
-        return _uiState.value.outputDuration.toComponents { hours, minutes, seconds, nanoseconds
+    fun getDurationMS(): List<String> {
+        val minutes = _uiState.value.outputDuration.inWholeMinutes.toString()
+        val seconds = _uiState.value.outputDuration.toComponents { hours, minutes, seconds, nanoseconds
             -> seconds }.toString()
+        return listOf(minutes, seconds)
+    }
+
+    fun getDurationS(): String {
+        return _uiState.value.outputDuration.inWholeSeconds.toString()
     }
 
     companion object {

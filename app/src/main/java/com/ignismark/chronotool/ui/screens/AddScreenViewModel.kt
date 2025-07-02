@@ -39,8 +39,8 @@ class AddScreenViewModel : ViewModel() {
         val inputDuration = calculateInputDuration()
         if (inputDuration != Duration.ZERO) {
             _uiState.value = _uiState.value.copy(valuesList = _uiState.value.valuesList + inputDuration)
-            val totalDuration = _uiState.value.totalDuration + inputDuration
-            _uiState.value = _uiState.value.copy(totalDuration = totalDuration)
+            val totalDuration = _uiState.value.outputDuration + inputDuration
+            _uiState.value = _uiState.value.copy(outputDuration = totalDuration)
         }
     }
 
@@ -52,19 +52,20 @@ class AddScreenViewModel : ViewModel() {
         )
     }
 
-    fun getHours(): String {
-        return _uiState.value.totalDuration.toComponents { hours, minutes, seconds, nanoseconds
-            -> hours }.toString()
+    fun getDurationHMS(): List<String> {
+        return _uiState.value.outputDuration.toComponents { hours, minutes, seconds, nanoseconds
+            -> listOf(hours.toString(), minutes.toString(), seconds.toString()) }
     }
 
-    fun getMinutes(): String {
-        return _uiState.value.totalDuration.toComponents { hours, minutes, seconds, nanoseconds
-            -> minutes }.toString()
-    }
-
-    fun getSeconds(): String {
-        return _uiState.value.totalDuration.toComponents { hours, minutes, seconds, nanoseconds
+    fun getDurationMS(): List<String> {
+        val minutes = _uiState.value.outputDuration.inWholeMinutes.toString()
+        val seconds = _uiState.value.outputDuration.toComponents { hours, minutes, seconds, nanoseconds
             -> seconds }.toString()
+        return listOf(minutes, seconds)
+    }
+
+    fun getDurationS(): String {
+        return _uiState.value.outputDuration.inWholeSeconds.toString()
     }
 
     companion object {
@@ -81,6 +82,6 @@ data class AddScreenUiState(
     val inputMinutes: String = "",
     val inputSeconds: String = "",
     val valuesList: List<Duration> = emptyList(),
-    val totalDuration: Duration = Duration.ZERO
+    val outputDuration: Duration = Duration.ZERO
 )
 
