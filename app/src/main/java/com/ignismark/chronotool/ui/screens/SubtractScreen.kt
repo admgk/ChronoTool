@@ -58,6 +58,7 @@ fun SubtractScreen(
                 isClear = true,
                 onClickSet = {
                     viewModel.setMinuendDuration()
+                    viewModel.clearResults()
                     viewModel.clearInputForm()
                 },
                 onClickSubtract = {

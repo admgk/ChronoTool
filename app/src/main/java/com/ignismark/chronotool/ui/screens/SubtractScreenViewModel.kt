@@ -50,16 +50,11 @@ class SubtractScreenViewModel : ViewModel() {
         )
     }
 
-    fun subtractDuration() {
-        val inputDuration = calculateInputDuration()
-        if (inputDuration != Duration.ZERO) {
-            _uiState.value = _uiState.value.copy(valuesList = _uiState.value.valuesList + inputDuration)
-            if (_uiState.value.outputDuration == Duration.ZERO) {
-                _uiState.value = _uiState.value.copy(outputDuration = _uiState.value.minuendDuration)
-            }
-            val duration = _uiState.value.outputDuration - inputDuration
-            _uiState.value = _uiState.value.copy(outputDuration = duration)
-        }
+    fun clearResults() {
+        _uiState.value = _uiState.value.copy(
+            valuesList = emptyList(),
+            outputDuration = Duration.ZERO
+        )
     }
 
     fun clearScreen() {
@@ -71,6 +66,18 @@ class SubtractScreenViewModel : ViewModel() {
             minuendDuration = Duration.ZERO,
             outputDuration = Duration.ZERO
         )
+    }
+
+    fun subtractDuration() {
+        val inputDuration = calculateInputDuration()
+        if (inputDuration != Duration.ZERO) {
+            _uiState.value = _uiState.value.copy(valuesList = _uiState.value.valuesList + inputDuration)
+            if (_uiState.value.outputDuration == Duration.ZERO) {
+                _uiState.value = _uiState.value.copy(outputDuration = _uiState.value.minuendDuration)
+            }
+            val duration = _uiState.value.outputDuration - inputDuration
+            _uiState.value = _uiState.value.copy(outputDuration = duration)
+        }
     }
 
     fun getMinuendHours(): String {
