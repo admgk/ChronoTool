@@ -26,8 +26,9 @@ fun HistoryHorizontalGrid(
     LazyHorizontalGrid(
         modifier = Modifier
             .fillMaxWidth()
-            .height(96.dp),
-        rows = GridCells.Fixed(3),
+            .height(72.dp).
+            padding(horizontal = 8.dp, vertical = 4.dp),
+        rows = GridCells.Fixed(2),
         userScrollEnabled = true,
         horizontalArrangement = Arrangement.Start,
         verticalArrangement = Arrangement.Top,
@@ -35,7 +36,7 @@ fun HistoryHorizontalGrid(
         items(valuesList.size) { index ->
             Card(
                 modifier = Modifier
-                    .aspectRatio(3f)
+                    .aspectRatio(3.5f)
                     .padding(2.dp),
                 border = BorderStroke(1.dp, Color.Black)
             ) {
