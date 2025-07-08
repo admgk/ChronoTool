@@ -51,13 +51,15 @@ fun ChronoToolApp() {
             composable(route = ChronoToolRoutes.Add.title) {
                 AddScreen(
                     modifier = Modifier.padding(innerPadding),
-                    viewModel = addViewModel
+                    viewModel = addViewModel,
+                    navController = navController
                 )
             }
             composable(route = ChronoToolRoutes.Subtract.title) {
                 SubtractScreen(
                     modifier = Modifier.padding(innerPadding),
-                    viewModel = subtractViewModel
+                    viewModel = subtractViewModel,
+                    navController = navController
                 )
             }
         }
