@@ -47,6 +47,7 @@ fun SubtractScreen(
                 hours = uiState.inputHours,
                 minutes = uiState.inputMinutes,
                 seconds = uiState.inputSeconds,
+                focusedField = uiState.inputFormFocus,
                 onClick = {
                     viewModel.updateInputFormFocus(it)
                 }

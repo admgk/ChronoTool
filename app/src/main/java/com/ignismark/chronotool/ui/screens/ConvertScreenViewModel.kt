@@ -18,6 +18,12 @@ class ConvertScreenViewModel : ViewModel() {
 
     fun updateInputFormFocus(inputFormField: InputFormField) {
         _uiState.value = _uiState.value.copy(inputFormFocus = inputFormField)
+        when (inputFormField) {
+            InputFormField.HOURS -> _uiState.value = _uiState.value.copy(inputHours = " ")
+            InputFormField.MINUTES -> _uiState.value = _uiState.value.copy(inputMinutes = " ")
+            InputFormField.SECONDS -> _uiState.value = _uiState.value.copy(inputSeconds = " ")
+            else -> { }
+        }
     }
 
     fun updateInputValue(input: String) {
@@ -91,6 +97,7 @@ class ConvertScreenViewModel : ViewModel() {
             inputHours = "",
             inputMinutes = "",
             inputSeconds = "",
+            inputFormFocus = InputFormField.NONE,
             outputDuration = Duration.ZERO
         )
     }
