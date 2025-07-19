@@ -19,9 +19,21 @@ class ConvertScreenViewModel : ViewModel() {
     fun updateInputFormFocus(inputFormField: InputFormField) {
         _uiState.value = _uiState.value.copy(inputFormFocus = inputFormField)
         when (inputFormField) {
-            InputFormField.HOURS -> _uiState.value = _uiState.value.copy(inputHours = " ")
-            InputFormField.MINUTES -> _uiState.value = _uiState.value.copy(inputMinutes = " ")
-            InputFormField.SECONDS -> _uiState.value = _uiState.value.copy(inputSeconds = " ")
+            InputFormField.HOURS -> _uiState.value = _uiState.value.copy(
+                inputHours = _uiState.value.inputHours.ifEmpty { " " },
+                inputMinutes = _uiState.value.inputMinutes.ifBlank { "" },
+                inputSeconds = _uiState.value.inputSeconds.ifBlank { "" }
+            )
+            InputFormField.MINUTES -> _uiState.value = _uiState.value.copy(
+                inputHours = _uiState.value.inputHours.ifBlank { "" },
+                inputMinutes = _uiState.value.inputMinutes.ifEmpty { " " },
+                inputSeconds = _uiState.value.inputSeconds.ifBlank { "" }
+            )
+            InputFormField.SECONDS -> _uiState.value = _uiState.value.copy(
+                inputHours = _uiState.value.inputHours.ifBlank { "" },
+                inputMinutes = _uiState.value.inputMinutes.ifBlank { "" },
+                inputSeconds = _uiState.value.inputSeconds.ifEmpty { " " }
+            )
             else -> { }
         }
     }
