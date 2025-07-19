@@ -1,7 +1,9 @@
 package com.ignismark.chronotool.ui.screens
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Surface
@@ -31,9 +33,12 @@ fun AddScreen(
     val uiState = viewModel.uiState.collectAsState().value
 
     Surface(
-        modifier = modifier
+        modifier = modifier.fillMaxSize()
     ) {
-        Column {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.SpaceEvenly
+        ) {
             InputForm(
                 hours = uiState.inputHours,
                 minutes = uiState.inputMinutes,
