@@ -2,7 +2,7 @@ package com.ignismark.chronotool.ui.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -23,15 +23,20 @@ fun InputForm(
     onClick: (InputFormField) -> Unit
 ) {
 
-    Column(
-        modifier = Modifier.fillMaxWidth().padding(top = 8.dp, bottom = 8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 8.dp, bottom = 8.dp, start = 16.dp, end = 16.dp),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         OutlinedTextField(
             value = hours,
             onValueChange = {},
-            modifier = Modifier.clickable { onClick(InputFormField.HOURS) },
+            modifier = Modifier
+                .weight(1f)
+                .padding(end = 8.dp)
+                .clickable { onClick(InputFormField.HOURS) },
             enabled = false,
             label = {
                 Text(text = "Hours")
@@ -55,7 +60,10 @@ fun InputForm(
         OutlinedTextField(
             value = minutes,
             onValueChange = {},
-            modifier = Modifier.clickable { onClick(InputFormField.MINUTES) },
+            modifier = Modifier
+                .weight(1f)
+                .padding(end = 8.dp)
+                .clickable { onClick(InputFormField.MINUTES) },
             enabled = false,
             label = {
                 Text(text = "Minutes")
@@ -79,7 +87,9 @@ fun InputForm(
         OutlinedTextField(
             value = seconds,
             onValueChange = {},
-            modifier = Modifier.clickable { onClick(InputFormField.SECONDS) },
+            modifier = Modifier
+                .weight(1f)
+                .clickable { onClick(InputFormField.SECONDS) },
             enabled = false,
             label = {
                 Text(text = "Seconds")
