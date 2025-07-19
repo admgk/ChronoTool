@@ -26,21 +26,22 @@ fun NumericKeyboard(
     )
 
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.padding(bottom = 4.dp)
     ) {
         keys.forEach { rowKeys ->
             Row(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(4.dp)
+                    .padding(top = 4.dp, start = 4.dp, end = 4.dp)
             ) {
                 rowKeys.forEach { key ->
                     Button(
                         onClick = { onKeyClick(key) },
                         modifier = Modifier
                             .weight(1f)
-                            .padding(4.dp)
+                            .padding(top = 4.dp, start = 4.dp, end = 4.dp)
                     ) {
                         Text(
                             text = key,

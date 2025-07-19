@@ -12,6 +12,7 @@ import androidx.navigation.NavHostController
 import com.ignismark.chronotool.ui.components.ButtonPanel
 import com.ignismark.chronotool.ui.components.HistoryHorizontalGrid
 import com.ignismark.chronotool.ui.components.InputForm
+import com.ignismark.chronotool.ui.components.NumericKeyboard
 import com.ignismark.chronotool.ui.components.ResultBoard
 import com.ignismark.chronotool.ui.utils.ChronoToolRoutes
 
@@ -67,6 +68,12 @@ fun AddScreen(
                 hms = viewModel.getDurationHMS(),
                 ms = viewModel.getDurationMS(),
                 s = viewModel.getDurationS()
+            )
+
+            NumericKeyboard(
+                onKeyClick = {
+                    viewModel.updateInputValue(it)
+                }
             )
         }
     }

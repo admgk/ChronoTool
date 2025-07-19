@@ -20,16 +20,40 @@ class AddScreenViewModel : ViewModel() {
         _uiState.value = _uiState.value.copy(inputFormFocus = inputFormField)
     }
 
-    fun updateInputHours(input: String) {
-        _uiState.value = _uiState.value.copy(inputHours = input)
-    }
-
-    fun updateInputMinutes(input: String) {
-        _uiState.value = _uiState.value.copy(inputMinutes = input)
-    }
-
-    fun updateInputSeconds(input: String) {
-        _uiState.value = _uiState.value.copy(inputSeconds = input)
+    fun updateInputValue(input: String) {
+        when (_uiState.value.inputFormFocus) {
+            InputFormField.HOURS ->
+                when (input) {
+                    "C" -> _uiState.value = _uiState.value.copy(inputHours = "")
+                    "<" -> _uiState.value = _uiState.value.copy(
+                        inputHours =_uiState.value.inputHours.dropLast(1)
+                    )
+                    else -> _uiState.value = _uiState.value.copy(
+                        inputHours = _uiState.value.inputHours.plus(input)
+                    )
+                }
+            InputFormField.MINUTES ->
+                when (input) {
+                    "C" -> _uiState.value = _uiState.value.copy(inputMinutes = "")
+                    "<" -> _uiState.value = _uiState.value.copy(
+                        inputMinutes =_uiState.value.inputMinutes.dropLast(1)
+                    )
+                    else -> _uiState.value = _uiState.value.copy(
+                        inputMinutes = _uiState.value.inputMinutes.plus(input)
+                    )
+                }
+            InputFormField.SECONDS ->
+                when (input) {
+                    "C" -> _uiState.value = _uiState.value.copy(inputSeconds = "")
+                    "<" -> _uiState.value = _uiState.value.copy(
+                        inputSeconds = _uiState.value.inputSeconds.dropLast(1)
+                    )
+                    else -> _uiState.value = _uiState.value.copy(
+                        inputSeconds = _uiState.value.inputSeconds.plus(input)
+                    )
+                }
+            else -> { }
+        }
     }
 
     fun calculateInputDuration() : Duration {
@@ -53,7 +77,8 @@ class AddScreenViewModel : ViewModel() {
         _uiState.value = _uiState.value.copy(
             inputHours = "",
             inputMinutes = "",
-            inputSeconds = ""
+            inputSeconds = "",
+            inputFormFocus = InputFormField.NONE
         )
     }
 
@@ -78,6 +103,7 @@ class AddScreenViewModel : ViewModel() {
             inputHours = "",
             inputMinutes = "",
             inputSeconds = "",
+            inputFormFocus = InputFormField.NONE,
             valuesList = emptyList(),
             outputDuration = Duration.ZERO
         )
