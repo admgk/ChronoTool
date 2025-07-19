@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.ignismark.chronotool.ui.components.InputFormField
 import com.ignismark.chronotool.ui.utils.calculateDuration
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,6 +15,10 @@ class AddScreenViewModel : ViewModel() {
 
     private val _uiState = MutableStateFlow(AddScreenUiState())
     val uiState: StateFlow<AddScreenUiState> = _uiState.asStateFlow()
+
+    fun updateInputFormFocus(inputFormField: InputFormField) {
+        _uiState.value = _uiState.value.copy(inputFormFocus = inputFormField)
+    }
 
     fun updateInputHours(input: String) {
         _uiState.value = _uiState.value.copy(inputHours = input)
@@ -91,6 +96,7 @@ data class AddScreenUiState(
     val inputHours: String = "",
     val inputMinutes: String = "",
     val inputSeconds: String = "",
+    val inputFormFocus: InputFormField = InputFormField.NONE,
     val valuesList: List<Duration> = emptyList(),
     val outputDuration: Duration = Duration.ZERO
 )

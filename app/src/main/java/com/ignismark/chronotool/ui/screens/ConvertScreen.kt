@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.ignismark.chronotool.ui.components.ButtonPanel
 import com.ignismark.chronotool.ui.components.InputForm
+import com.ignismark.chronotool.ui.components.NumericKeyboard
 import com.ignismark.chronotool.ui.components.ResultBoard
 
 @Composable
@@ -34,18 +35,7 @@ fun ConvertScreen(
                 hours = uiState.inputHours,
                 minutes = uiState.inputMinutes,
                 seconds = uiState.inputSeconds,
-                onChangeHours = {
-                    viewModel.updateInputHours(it)
-                    viewModel.updateOutputDuration()
-                },
-                onChangeMinutes = {
-                    viewModel.updateInputMinutes(it)
-                    viewModel.updateOutputDuration()
-                },
-                onChangeSeconds = {
-                    viewModel.updateInputSeconds(it)
-                    viewModel.updateOutputDuration()
-                }
+                onClick = viewModel::updateInputFormFocus
             )
 
             HorizontalDivider()
@@ -63,6 +53,12 @@ fun ConvertScreen(
                 hms = viewModel.getDurationHMS(),
                 ms = viewModel.getDurationMS(),
                 s = viewModel.getDurationS()
+            )
+
+            NumericKeyboard(
+                onKeyClick = {
+                    viewModel.updateInputValue(it)
+                }
             )
         }
     }

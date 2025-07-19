@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.ignismark.chronotool.ui.components.InputFormField
 import com.ignismark.chronotool.ui.utils.calculateDuration
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,16 +16,45 @@ class ConvertScreenViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(ConvertScreenUiState())
     val uiState: StateFlow<ConvertScreenUiState> = _uiState.asStateFlow()
 
-    fun updateInputHours(input: String) {
-        _uiState.value = _uiState.value.copy(inputHours = input)
+    fun updateInputFormFocus(inputFormField: InputFormField) {
+        _uiState.value = _uiState.value.copy(inputFormFocus = inputFormField)
     }
 
-    fun updateInputMinutes(input: String) {
-        _uiState.value = _uiState.value.copy(inputMinutes = input)
-    }
-
-    fun updateInputSeconds(input: String) {
-        _uiState.value = _uiState.value.copy(inputSeconds = input)
+    fun updateInputValue(input: String) {
+        when (_uiState.value.inputFormFocus) {
+            InputFormField.HOURS ->
+                when (input) {
+                    "C" -> _uiState.value = _uiState.value.copy(inputHours = "")
+                    "<" -> _uiState.value = _uiState.value.copy(
+                        inputHours =_uiState.value.inputHours.dropLast(1)
+                    )
+                    else -> _uiState.value = _uiState.value.copy(
+                        inputHours = _uiState.value.inputHours.plus(input)
+                    )
+                }
+            InputFormField.MINUTES ->
+                when (input) {
+                    "C" -> _uiState.value = _uiState.value.copy(inputMinutes = "")
+                    "<" -> _uiState.value = _uiState.value.copy(
+                        inputMinutes =_uiState.value.inputMinutes.dropLast(1)
+                    )
+                    else -> _uiState.value = _uiState.value.copy(
+                        inputMinutes = _uiState.value.inputMinutes.plus(input)
+                    )
+                }
+            InputFormField.SECONDS ->
+                when (input) {
+                    "C" -> _uiState.value = _uiState.value.copy(inputSeconds = "")
+                    "<" -> _uiState.value = _uiState.value.copy(
+                        inputSeconds = _uiState.value.inputSeconds.dropLast(1)
+                    )
+                    else -> _uiState.value = _uiState.value.copy(
+                        inputSeconds = _uiState.value.inputSeconds.plus(input)
+                    )
+                }
+            else -> { }
+        }
+        updateOutputDuration()
     }
 
     fun calculateOutputDuration() : Duration {
@@ -78,5 +108,6 @@ data class ConvertScreenUiState(
     val inputHours: String = "",
     val inputMinutes: String = "",
     val inputSeconds: String = "",
+    val inputFormFocus: InputFormField = InputFormField.NONE,
     val outputDuration: Duration = Duration.ZERO
 )

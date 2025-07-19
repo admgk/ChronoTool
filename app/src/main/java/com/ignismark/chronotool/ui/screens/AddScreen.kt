@@ -37,14 +37,8 @@ fun AddScreen(
                 hours = uiState.inputHours,
                 minutes = uiState.inputMinutes,
                 seconds = uiState.inputSeconds,
-                onChangeHours = {
-                    viewModel.updateInputHours(it)
-                },
-                onChangeMinutes = {
-                    viewModel.updateInputMinutes(it)
-                },
-                onChangeSeconds = {
-                    viewModel.updateInputSeconds(it)
+                onClick = {
+                    viewModel.updateInputFormFocus(it)
                 }
             )
 
