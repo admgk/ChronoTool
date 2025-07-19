@@ -13,6 +13,7 @@ import com.ignismark.chronotool.ui.components.ButtonPanel
 import com.ignismark.chronotool.ui.components.HistoryHorizontalGrid
 import com.ignismark.chronotool.ui.components.InputForm
 import com.ignismark.chronotool.ui.components.MinuendDurationPanel
+import com.ignismark.chronotool.ui.components.NumericKeyboard
 import com.ignismark.chronotool.ui.components.ResultBoard
 import com.ignismark.chronotool.ui.utils.ChronoToolRoutes
 
@@ -83,6 +84,12 @@ fun SubtractScreen(
                 hms = viewModel.getDurationHMS(),
                 ms = viewModel.getDurationMS(),
                 s = viewModel.getDurationS()
+            )
+
+            NumericKeyboard(
+                onKeyClick = {
+                    viewModel.updateInputValue(it)
+                }
             )
         }
     }
