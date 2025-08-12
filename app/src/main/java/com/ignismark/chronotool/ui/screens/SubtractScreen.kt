@@ -80,16 +80,18 @@ fun SubtractScreen(
 
         HorizontalDivider()
 
-        ResultBoard(
-            hms = viewModel.getDurationHMS(),
-            ms = viewModel.getDurationMS(),
-            s = viewModel.getDurationS()
-        )
+        Column {
+            ResultBoard(
+                hms = viewModel.getDurationHMS(),
+                ms = viewModel.getDurationMS(),
+                s = viewModel.getDurationS()
+            )
 
-        NumericKeyboard(
-            onKeyClick = {
-                viewModel.updateInputValue(it)
-            }
-        )
+            NumericKeyboard(
+                onKeyClick = {
+                    viewModel.updateInputValue(it)
+                }
+            )
+        }
     }
 }
