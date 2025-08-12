@@ -27,7 +27,7 @@ fun NumericKeyboard(
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.padding(bottom = 4.dp)
+        modifier = Modifier.padding(bottom = 8.dp)
     ) {
         keys.forEach { rowKeys ->
             Row(

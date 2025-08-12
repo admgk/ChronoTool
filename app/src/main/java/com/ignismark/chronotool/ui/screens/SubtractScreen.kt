@@ -33,69 +33,64 @@ fun SubtractScreen(
 
     val uiState = viewModel.uiState.collectAsState().value
 
-    Surface(
-        modifier = modifier.fillMaxSize()
+    Column(
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
+        MinuendDurationPanel(
+            hours = viewModel.getMinuendHours(),
+            minutes = viewModel.getMinuendMinutes(),
+            seconds = viewModel.getMinuendSeconds()
+        )
 
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.SpaceEvenly
-        ) {
-            MinuendDurationPanel(
-                hours = viewModel.getMinuendHours(),
-                minutes = viewModel.getMinuendMinutes(),
-                seconds = viewModel.getMinuendSeconds()
-            )
+        HorizontalDivider()
 
-            HorizontalDivider()
+        InputForm(
+            hours = uiState.inputHours,
+            minutes = uiState.inputMinutes,
+            seconds = uiState.inputSeconds,
+            focusedField = uiState.inputFormFocus,
+            onClick = {
+                viewModel.updateInputFormFocus(it)
+            }
+        )
 
-            InputForm(
-                hours = uiState.inputHours,
-                minutes = uiState.inputMinutes,
-                seconds = uiState.inputSeconds,
-                focusedField = uiState.inputFormFocus,
-                onClick = {
-                    viewModel.updateInputFormFocus(it)
-                }
-            )
+        HorizontalDivider()
 
-            HorizontalDivider()
+        ButtonPanel(
+            isSet = true,
+            isSubtract = true,
+            isClear = true,
+            onClickSet = {
+                viewModel.setMinuendDuration()
+                viewModel.clearResults()
+                viewModel.clearInputForm()
+            },
+            onClickSubtract = {
+                viewModel.subtractDuration()
+                viewModel.clearInputForm()
+            },
+            onClickClear = {
+                viewModel.clearScreen()
+            }
+        )
 
-            ButtonPanel(
-                isSet = true,
-                isSubtract = true,
-                isClear = true,
-                onClickSet = {
-                    viewModel.setMinuendDuration()
-                    viewModel.clearResults()
-                    viewModel.clearInputForm()
-                },
-                onClickSubtract = {
-                    viewModel.subtractDuration()
-                    viewModel.clearInputForm()
-                },
-                onClickClear = {
-                    viewModel.clearScreen()
-                }
-            )
+        HorizontalDivider()
 
-            HorizontalDivider()
+        HistoryHorizontalGrid(uiState.valuesList)
 
-            HistoryHorizontalGrid(uiState.valuesList)
+        HorizontalDivider()
 
-            HorizontalDivider()
+        ResultBoard(
+            hms = viewModel.getDurationHMS(),
+            ms = viewModel.getDurationMS(),
+            s = viewModel.getDurationS()
+        )
 
-            ResultBoard(
-                hms = viewModel.getDurationHMS(),
-                ms = viewModel.getDurationMS(),
-                s = viewModel.getDurationS()
-            )
-
-            NumericKeyboard(
-                onKeyClick = {
-                    viewModel.updateInputValue(it)
-                }
-            )
-        }
+        NumericKeyboard(
+            onKeyClick = {
+                viewModel.updateInputValue(it)
+            }
+        )
     }
 }

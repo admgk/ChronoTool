@@ -29,43 +29,39 @@ fun ConvertScreen(
 
     val uiState = viewModel.uiState.collectAsState().value
 
-    Surface(
-        modifier = modifier.fillMaxSize()
+    Column(
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.SpaceEvenly
-        ) {
-            InputForm(
-                hours = uiState.inputHours,
-                minutes = uiState.inputMinutes,
-                seconds = uiState.inputSeconds,
-                focusedField = uiState.inputFormFocus,
-                onClick = viewModel::updateInputFormFocus
-            )
+        InputForm(
+            hours = uiState.inputHours,
+            minutes = uiState.inputMinutes,
+            seconds = uiState.inputSeconds,
+            focusedField = uiState.inputFormFocus,
+            onClick = viewModel::updateInputFormFocus
+        )
 
-            HorizontalDivider()
+        HorizontalDivider()
 
-            ButtonPanel(
-                isClear = true,
-                onClickClear = {
-                    viewModel.clearScreen()
-                }
-            )
+        ButtonPanel(
+            isClear = true,
+            onClickClear = {
+                viewModel.clearScreen()
+            }
+        )
 
-            HorizontalDivider()
+        HorizontalDivider()
 
-            ResultBoard(
-                hms = viewModel.getDurationHMS(),
-                ms = viewModel.getDurationMS(),
-                s = viewModel.getDurationS()
-            )
+        ResultBoard(
+            hms = viewModel.getDurationHMS(),
+            ms = viewModel.getDurationMS(),
+            s = viewModel.getDurationS()
+        )
 
-            NumericKeyboard(
-                onKeyClick = {
-                    viewModel.updateInputValue(it)
-                }
-            )
-        }
+        NumericKeyboard(
+            onKeyClick = {
+                viewModel.updateInputValue(it)
+            }
+        )
     }
 }

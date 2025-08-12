@@ -4,10 +4,12 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.material3.Card
@@ -26,9 +28,9 @@ fun HistoryHorizontalGrid(
     LazyHorizontalGrid(
         modifier = Modifier
             .fillMaxWidth()
-            .height(72.dp).
+            .height(36.dp).
             padding(horizontal = 8.dp, vertical = 4.dp),
-        rows = GridCells.Fixed(2),
+        rows = GridCells.Fixed(1),
         userScrollEnabled = true,
         horizontalArrangement = Arrangement.Start,
         verticalArrangement = Arrangement.Top,
