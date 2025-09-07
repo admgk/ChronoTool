@@ -26,8 +26,8 @@ fun HistoryHorizontalGrid(
     LazyHorizontalGrid(
         modifier = Modifier
             .fillMaxWidth()
-            .height(36.dp).
-            padding(horizontal = 8.dp, vertical = 4.dp),
+            .height(36.dp)
+            .padding(horizontal = 8.dp, vertical = 4.dp),
         rows = GridCells.Fixed(1),
         userScrollEnabled = true,
         horizontalArrangement = Arrangement.Start,
