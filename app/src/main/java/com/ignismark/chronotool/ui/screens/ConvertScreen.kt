@@ -1,7 +1,7 @@
 package com.ignismark.chronotool.ui.screens
 
-import android.app.Activity
 import androidx.activity.compose.BackHandler
+import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,7 +9,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import com.ignismark.chronotool.ui.components.ButtonPanel
 import com.ignismark.chronotool.ui.components.InputForm
 import com.ignismark.chronotool.ui.components.NumericKeyboard
@@ -21,7 +20,7 @@ fun ConvertScreen(
     viewModel: ConvertScreenViewModel
 ) {
 
-    val activity = (LocalContext.current as? Activity)
+    val activity = LocalActivity.current
     BackHandler {
         activity?.moveTaskToBack(true)
     }
