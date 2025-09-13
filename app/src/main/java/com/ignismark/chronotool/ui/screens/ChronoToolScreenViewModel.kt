@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlin.time.Duration
 
-class AddScreenViewModel : ViewModel() {
+class ChronoToolScreenViewModel : ViewModel() {
 
     private val _uiState = MutableStateFlow(AddScreenUiState())
     val uiState: StateFlow<AddScreenUiState> = _uiState.asStateFlow()
@@ -100,6 +100,16 @@ class AddScreenViewModel : ViewModel() {
         )
     }
 
+    fun subtractDuration() {
+        val inputDuration = calculateInputDuration()
+        if (inputDuration != Duration.ZERO) {
+            _uiState.value = _uiState.value.copy(valuesList = _uiState.value.valuesList + inputDuration)
+
+            val duration = _uiState.value.outputDuration - inputDuration
+            _uiState.value = _uiState.value.copy(outputDuration = duration)
+        }
+    }
+
     fun getDurationHMS(): List<String> {
         return _uiState.value.outputDuration.toComponents { hours, minutes, seconds, nanoseconds
             -> listOf(hours.toString(), minutes.toString(), seconds.toString()) }
@@ -130,7 +140,7 @@ class AddScreenViewModel : ViewModel() {
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                AddScreenViewModel()
+                ChronoToolScreenViewModel()
             }
         }
     }
@@ -142,6 +152,6 @@ data class AddScreenUiState(
     val inputSeconds: String = "",
     val inputFormFocus: InputFormField = InputFormField.NONE,
     val valuesList: List<Duration> = emptyList(),
-    val outputDuration: Duration = Duration.ZERO
-)
+    val outputDuration: Duration = Duration.ZERO,
+    )
 

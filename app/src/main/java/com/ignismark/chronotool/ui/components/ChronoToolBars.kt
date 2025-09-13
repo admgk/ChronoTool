@@ -24,33 +24,3 @@ fun ChronoToolTopBar() {
         }
     )
 }
-
-@Composable
-fun ChronoToolNavigationBar(
-    navController: NavController
-) {
-
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route
-
-    NavigationBar {
-        NavigationBarItem(
-            selected = currentRoute == ChronoToolRoutes.Convert.title,
-            onClick = { navController.navigate(ChronoToolRoutes.Convert.title) },
-            icon = { Icon(imageVector = ImageVector.vectorResource(R.drawable.cycle_24dp), contentDescription = "Convert") },
-            label = { Text(text = "Convert") }
-        )
-        NavigationBarItem(
-            selected = currentRoute == ChronoToolRoutes.Add.title,
-            onClick = { navController.navigate(ChronoToolRoutes.Add.title) },
-            icon = { Icon(imageVector = ImageVector.vectorResource(R.drawable.add_24dp), contentDescription = "Add") },
-            label = { Text(text = "Add") }
-        )
-        NavigationBarItem(
-            selected = currentRoute == ChronoToolRoutes.Subtract.title,
-            onClick = { navController.navigate(ChronoToolRoutes.Subtract.title) },
-            icon = { Icon(imageVector = ImageVector.vectorResource(R.drawable.remove_24dp), contentDescription = "Subtract") },
-            label = { Text(text = "Subtract") }
-        )
-    }
-}
